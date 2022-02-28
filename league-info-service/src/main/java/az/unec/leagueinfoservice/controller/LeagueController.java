@@ -31,7 +31,7 @@ public class LeagueController {
         return leagueService.getByLeagueNameClubs(leagueName);
     }
 
-    @GetMapping("/club/one")
+    @GetMapping("/club/info")
     public ClubManagerData getByLeagueNameAndClubName(@RequestParam String leagueName,
                                                       @RequestParam String clubName) {
         return leagueService.getByLeagueNameAndClubName(leagueName, clubName);

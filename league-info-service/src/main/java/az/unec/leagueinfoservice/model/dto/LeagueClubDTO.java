@@ -1,15 +1,13 @@
 package az.unec.leagueinfoservice.model.dto;
 
 import az.unec.leagueinfoservice.client.dto.ClubDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeagueClubDTO {

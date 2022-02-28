@@ -12,7 +12,7 @@ public class ClubController {
     private ClubService service;
 
     @GetMapping("/club/{clubName}")
-    public ClubsDTO clubinfo(@PathVariable String clubName){
+    public ClubsDTO clubInfo(@PathVariable String clubName){
         return service.club(clubName);
     }
 

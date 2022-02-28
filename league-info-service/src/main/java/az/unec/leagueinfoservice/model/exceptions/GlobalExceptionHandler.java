@@ -15,7 +15,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ErrorResponse handleClubNotFoundException(ClubNotFoundException ex) {
+        return new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
+    }
+
+    @ExceptionHandler
     public ErrorResponse handleClubNullPointerException(ClubNullPointerException ex) {
         return new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    public ErrorResponse handleManagerNotFoundException(ManagerNotFoundException ex) {
+        return new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
     }
 }
