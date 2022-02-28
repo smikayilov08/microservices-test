@@ -11,12 +11,14 @@ import az.unec.leagueinfoservice.model.data.LeagueData;
 import az.unec.leagueinfoservice.model.dto.LeagueClubDTO;
 import az.unec.leagueinfoservice.model.dto.LeagueDTO;
 import az.unec.leagueinfoservice.model.exceptions.ClubNotFoundException;
+import az.unec.leagueinfoservice.model.exceptions.ConnectionException;
 import az.unec.leagueinfoservice.model.exceptions.LeagueNotFoundException;
 import az.unec.leagueinfoservice.model.exceptions.ManagerNotFoundException;
 import az.unec.leagueinfoservice.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -44,7 +46,12 @@ public class LeagueServiceImpl implements LeagueService {
     @Override
     public LeagueClubDTO getByLeagueNameClubs(String leagueName) {
         League league = leagueRepository.findByLeagueName(leagueName).orElseThrow(() -> new LeagueNotFoundException("League Not Found"));
-        ClubData clubData = restTemplate.getForObject("http://club-info-service/club", ClubData.class);
+        ClubData clubData;
+        try {
+            clubData = restTemplate.getForObject("http://club-info-service/club", ClubData.class);
+        } catch (HttpServerErrorException ex) {
+            throw new ConnectionException("the server does not work");
+        }
         assert clubData != null;
         List<ClubDTO> clubDTOList = clubData.getClubs().parallelStream().filter(club -> club.getLeagueName().equalsIgnoreCase(league.getLeagueName())).map(ClubDTO::new).collect(Collectors.toList());
         return new LeagueClubDTO(new LeagueDTO(league), clubDTOList);
@@ -56,6 +63,8 @@ public class LeagueServiceImpl implements LeagueService {
         ClubManager clubManager;
         try {
             clubManager = restTemplate.getForObject("http://club-info-service/club/" + clubName, ClubManager.class);
+        } catch (HttpServerErrorException ex) {
+            throw new ConnectionException("the server does not work");
         } catch (HttpClientErrorException ex) {
             if (Objects.requireNonNull(ex.getMessage()).contains("Club doesn't exist")) {
                 throw new ClubNotFoundException("Club doesn't exist");
@@ -64,7 +73,10 @@ public class LeagueServiceImpl implements LeagueService {
             }
         }
         ClubManagerDTO clubManagerDTO = leagueClubDTO.getClubs().parallelStream()
-                .filter(clubDTO -> clubDTO.getClubName().equalsIgnoreCase(clubManager.getClubName()))
+                .filter(clubDTO -> {
+                    assert clubManager != null;
+                    return clubDTO.getClubName().equalsIgnoreCase(clubManager.getClubName());
+                })
                 .map((clubDTO) -> new ClubManagerDTO(clubManager))
                 .findAny().get();
         return new ClubManagerData(leagueClubDTO.getLeague(), clubManagerDTO);

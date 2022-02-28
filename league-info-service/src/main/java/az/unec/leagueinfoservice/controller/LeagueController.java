@@ -5,10 +5,7 @@ import az.unec.leagueinfoservice.model.data.LeagueData;
 import az.unec.leagueinfoservice.model.dto.LeagueClubDTO;
 import az.unec.leagueinfoservice.service.LeagueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/league")
@@ -21,20 +18,19 @@ public class LeagueController {
         this.leagueService = leagueService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public LeagueData getAll() {
         return leagueService.getAll();
     }
 
-    @GetMapping("/club")
-    public LeagueClubDTO getByLeagueName(@RequestParam String leagueName) {
+    @GetMapping("/{leagueName}")
+    public LeagueClubDTO getByLeagueName(@PathVariable String leagueName) {
         return leagueService.getByLeagueNameClubs(leagueName);
     }
 
-    @GetMapping("/club/info")
-    public ClubManagerData getByLeagueNameAndClubName(@RequestParam String leagueName,
-                                                      @RequestParam String clubName) {
+    @GetMapping("/{leagueName}/{clubName}")
+    public ClubManagerData getByLeagueNameAndClubName(@PathVariable String leagueName,
+                                                      @PathVariable String clubName) {
         return leagueService.getByLeagueNameAndClubName(leagueName, clubName);
-
     }
 }

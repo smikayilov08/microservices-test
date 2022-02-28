@@ -28,4 +28,9 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleManagerNotFoundException(ManagerNotFoundException ex) {
         return new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now());
     }
+
+    @ExceptionHandler
+    public ErrorResponse handleConnectionException(ConnectionException ex) {
+        return new ErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now());
+    }
 }
