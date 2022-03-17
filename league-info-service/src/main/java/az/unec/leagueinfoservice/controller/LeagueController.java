@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/league")
+@RequestMapping("/leagues")
 public class LeagueController {
 
     private final LeagueService leagueService;
@@ -23,12 +23,12 @@ public class LeagueController {
         return leagueService.getAll();
     }
 
-    @GetMapping("/club/{league}")
+    @GetMapping("/clubs/{league}")
     public LeagueClubDTO getByLeagueName(@PathVariable String league) {
         return leagueService.getByLeagueNameClubs(league);
     }
 
-    @GetMapping("/club/info/{league}/{club}")
+    @GetMapping("/clubs/info/{league}/{club}")
     public ClubManagerData getByLeagueNameAndClubName(@PathVariable String league,
                                                       @PathVariable String club) {
         return leagueService.getByLeagueNameAndClubName(league, club);

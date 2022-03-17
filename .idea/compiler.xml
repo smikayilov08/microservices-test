@@ -16,7 +16,7 @@
     <bytecodeTargetLevel>
       <module name="club-info-service" target="1.8" />
       <module name="discovery-server" target="1.8" />
-      <module name="league-info-service" target="11" />
+      <module name="league-info-service" target="1.8" />
       <module name="manager-info-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>

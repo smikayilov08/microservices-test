@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: league-info-service
+          uri: lb://league-info-service
+          predicates:
+           - Path=/leagues/**
+        - id: generate
+          uri: lb://generate-token-service
+          predicates:
+            - Path=/login/**
+      filters:
+        - name: CustomFilter
+
+  application:
+    name: spring-cloud-gateway-service
+
+
+server:
+  port: 8888
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
