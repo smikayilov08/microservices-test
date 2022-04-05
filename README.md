@@ -14,7 +14,7 @@ to signup and login;
 to search for club and league;    
 
 # Example:
-```http
+
 http://localhost:8888/api/v1/signup(have to set userName and password
 {
     "userName":"",
@@ -32,10 +32,9 @@ you can access these api's.
 http://localhost:8888/api/v2/leagues/premier league/clubs/manchester united
 http://localhost:8888/api/v2/leagues/premier league/clubs/
 http://localhost:8888/api/v3/clubs/most-viewed
-```
+
 ## Configuration
 
-```http
   You have to configure 
   spring.datasource.driver-class-name
   spring.datasource.url
@@ -57,7 +56,7 @@ http://localhost:8888/api/v3/clubs/most-viewed
   insert into board  (id,club_name ,executor_name,title) 
   values(1,'liverpool','John Henry','Principal Owner')
   values(2,'manchester united','Joel Glazer','Executive Co-Chairman and Director')
-```
+
 
 
   
