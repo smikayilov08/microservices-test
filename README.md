@@ -36,7 +36,7 @@ http://localhost:8888/api/v3/clubs/most-viewed
 ## Configuration
 
 ```http
-  You have to configure 
+  You have to configure rabbitmq locally or inside docker,
   spring.datasource.driver-class-name
   spring.datasource.url
   spring.datasource.username
