@@ -46,7 +46,7 @@ http://localhost:8888/api/v3/clubs/most-viewed
   insert into league(id,league_name,country) 
   values(1,'premier league','england')
   
-  insert into clubs(id,arena,city,club_name,country_name,league)
+  insert into clubs(id,arena,city,club_name,country_name,league_name)
   values(1,'anfield','liverpool','liverpool','england','premier league')
   values(2,'old trafford','manchester','manchester united','england','premier league')
   
