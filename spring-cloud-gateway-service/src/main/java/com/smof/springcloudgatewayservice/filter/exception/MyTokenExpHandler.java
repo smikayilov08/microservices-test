@@ -17,6 +17,7 @@ import java.util.Map;
 
 @Component
 public class MyTokenExpHandler extends AbstractErrorWebExceptionHandler {
+
     public MyTokenExpHandler(MyTokenExp gea, ApplicationContext applicationContext,
 
                              ServerCodecConfigurer serverCodecConfigurer) {
@@ -29,6 +30,7 @@ public class MyTokenExpHandler extends AbstractErrorWebExceptionHandler {
 
 
     }
+
 
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(final ErrorAttributes errorAttributes) {

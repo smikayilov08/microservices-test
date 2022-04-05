@@ -22,11 +22,4 @@ public class Clubs {
     private String countryName;
     private String leagueName;
 
-    public Clubs(String name, String arena, String city, String countryName, String leagueName) {
-        this.clubName = name;
-        this.arena = arena;
-        this.city = city;
-        this.countryName = countryName;
-        this.leagueName = leagueName;
-    }
 }

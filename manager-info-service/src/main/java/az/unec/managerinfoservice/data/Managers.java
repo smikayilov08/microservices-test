@@ -20,9 +20,4 @@ public class Managers {
     @Column(unique = true)
     private String clubName;
 
-    public Managers(String managerName,String nationality,String clubName){
-        this.managerName=managerName;
-        this.nationality=nationality;
-        this.clubName=clubName;
-    }
 }

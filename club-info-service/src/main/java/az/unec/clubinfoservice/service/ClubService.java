@@ -5,18 +5,18 @@ import az.unec.clubinfoservice.exceptoin.MyNullPointerException;
 import az.unec.clubinfoservice.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClubService {
+
     @Autowired
     private ClubsRepo repo;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private ManagerService managerService;
 
     public ClubsDTO club(String clubName) {
         if (clubName == null || clubName.trim().length() < 3) {
@@ -26,11 +26,14 @@ public class ClubService {
         Optional<ClubsDTO> club = repo.findByClubName(clubName);
         club.orElseThrow(() -> new ClubNotFoundException("Club doesn't exist"));
 
-        ManagerDTO manager = restTemplate.getForObject("http://manager-info-service/manager/" + clubName, ManagerDTO.class);
+        managerService.setManagerQueue(clubName);
 
+        ManagerDTO manager =managerService.getManagerFromQueue();
         club.get().setManager(manager);
+
         return club.get();
     }
+
 
     public AllClubsDTO allClub() {
         Optional<List<ClubInfoDTO>> clubs = repo.findByClubNameNotNull();

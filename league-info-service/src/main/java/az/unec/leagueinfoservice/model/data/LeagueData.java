@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class LeagueData {
 
-    private List<LeagueDTO> leagueDTOList;
+    private List<LeagueDTO> leagues;
 }

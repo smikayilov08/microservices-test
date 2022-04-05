@@ -1,6 +1,6 @@
 package com.microservice.tokentest.security.data;
 
-import com.microservice.tokentest.data.Employees;
+import com.microservice.tokentest.data.UserEntity;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,15 +10,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails {
-    private Employees request;
+    private UserEntity request;
     List<SimpleGrantedAuthority> authorities;
 
-    public MyUserDetails(Employees request) {
+    public MyUserDetails(UserEntity request) {
         this.request = request;
-        authorities = Arrays.asList(request.getEmpRole().split(""))
-                .stream().map(SimpleGrantedAuthority::new)
+        authorities = Arrays.stream(request.getRole().split("")).map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
@@ -29,12 +29,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return request.getEmpPassword();
+        return request.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return request.getEmpName();
+        return request.getUserName();
     }
 
     @Override

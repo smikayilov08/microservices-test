@@ -1,7 +1,6 @@
 package com.microservice.tokentest.security.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 
@@ -9,13 +8,10 @@ import org.springframework.stereotype.Component;
 public class JwtFilter {
     @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
-    private UserDetailsService service;
 
-    public Boolean checkToken(String token) {
-        String name = null;
-        String jwt = null;
-        final String header =token;
+    public Boolean checkToken(String header) {
+        String name ;
+        String jwt;
 
         if (header != null && header.startsWith("Bearer ")) {
             jwt = header.substring(7);

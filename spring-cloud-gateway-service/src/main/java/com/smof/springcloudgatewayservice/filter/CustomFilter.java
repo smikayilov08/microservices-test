@@ -12,24 +12,30 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class CustomFilter implements GlobalFilter {
+
     @Autowired
     private WebClient.Builder builder;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        if (exchange.getRequest().getPath().toString().equals("/api/v1/login") ||
+                exchange.getRequest().getPath().toString().equals("/api/v1/signup") ) {
 
-        if (exchange.getRequest().getPath().toString().equals("/login")) {
             return chain.filter(exchange);
+
         } else {
-            String jwt=null;
+
+            String jwt;
+
             try {
                 jwt = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             }
             catch (NullPointerException e){
                 throw new NullPointerException("Token not found");
             }
+
             return builder.build().get()
-                    .uri("http://generate-token-service/check-token")
+                    .uri("http://localhost:8070/check-token")
                     .header("Authorization", jwt)
                     .retrieve()
                     .bodyToMono(Boolean.class)

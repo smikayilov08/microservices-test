@@ -17,6 +17,7 @@ public class UserEntity {
     @SequenceGenerator(name = "users_id",sequenceName = "users_id_sequence",allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="users_id")
     private Integer id;
+    @Column(unique = true)
     private String userName;
     private String password;
     private String role;
@@ -24,6 +25,6 @@ public class UserEntity {
     public UserEntity(UserEntityDto dto){
         this.userName=dto.getUserName();
         this.password=dto.getPassword();
-        this.role=dto.getRole();
+        this.role="USER";
     }
 }
