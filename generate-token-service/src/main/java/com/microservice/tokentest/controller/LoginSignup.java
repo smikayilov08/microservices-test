@@ -1,9 +1,12 @@
 package com.microservice.tokentest.controller;
 
+import com.microservice.tokentest.model.UserEntityDto;
 import com.microservice.tokentest.security.data.AuthenticationRequest;
 import com.microservice.tokentest.security.data.AuthenticationResponse;
 import com.microservice.tokentest.security.model.JwtUtil;
-import com.microservice.tokentest.service.CheckTokenService;
+import com.microservice.tokentest.service.UserService;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,10 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class Login {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequestMapping("/api/v1")
+public class LoginSignup {
     @Autowired
     AuthenticationManager manager;
 
@@ -26,11 +30,9 @@ public class Login {
     @Autowired
     JwtUtil jwtUtil;
 
-//    @Autowired
-//    private RestTemplate restTemplate;
-
     @Autowired
-    private CheckTokenService checkTokenService;
+    UserService userService;
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
@@ -42,22 +44,12 @@ public class Login {
         final UserDetails user = service.loadUserByUsername(request.getUserName());
 
         final String jwt = jwtUtil.createToken(user);
-        
-            //sending token to buyer-service
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        AuthenticationResponse data = new AuthenticationResponse(jwt);
-//
-//        HttpEntity<?> entity = new HttpEntity<Object>(data, headers);
-//        ResponseEntity<Object> responseEntity =
-//                responseEntity = restTemplate.exchange("http://customer-token-service/token", HttpMethod.POST, entity, Object.class);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    @GetMapping("/check-token")
-    public ResponseEntity<?> checkToken(@RequestHeader("Authorization") String token){
-        return new ResponseEntity<>(checkTokenService.checkToken(token),HttpStatus.ACCEPTED);
+    @PostMapping("/signup")
+    public UserEntityDto addEmp(@RequestBody UserEntityDto userEntityDto){
+        return userService.save(userEntityDto);
     }
 }
