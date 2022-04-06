@@ -1,6 +1,6 @@
 
 # Microservice-Test
-It's a microservice-test app  developed by me in order to practice the use of base microservice communication with rabbitmq in Spring boot.    
+It's a microservice-test app  developed in order to practice the use of base microservice communication with rabbitmq in Spring boot.    
 Used:  
 RabbitMQ;     
 Spring MVC;  
