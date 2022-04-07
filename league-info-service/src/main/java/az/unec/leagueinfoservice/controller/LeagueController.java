@@ -20,12 +20,12 @@ public class LeagueController {
     }
 
     @GetMapping("")
-    public LeagueData getAll(final HttpServletResponse response) {
+    public LeagueData getAll() {
         return leagueService.getAll();
     }
 
     @GetMapping("/{league}/clubs")
-    public ResponseEntity<?> getByLeagueName(@PathVariable String league,final HttpServletResponse response) {
+    public ResponseEntity<?> getByLeagueName(@PathVariable String league) {
         return ResponseEntity.ok(leagueService.getByLeagueNameClubs(league));
     }
 
